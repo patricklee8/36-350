@@ -1,12 +1,10 @@
 
-model_select=function(covariates,responses,cutoff){
-  lin.reg=lm(responses~covariates)
-  testresult=t.test(lin.reg)[[3]]
-  wcutoff=lin.reg[testresult<=cutoff]
-  
-  linreg.2=lm(responses ~ covariates[testresult<=cutoff,])
-  pvalues.2=t.test(linreg.2)[[3]]
-  return(wcutoff,pvalues.2)
+run_simulation=function(n_trials, n, p, cutoff){
+  for (n in (1:n_trials)){
+  for (i in c(10,100,1000)){
+    for (j in c(10,20,50)){
+  hist(model_select(generate_data(j,i)$covariates,generate_data(n_trials,i)$responses,0.05)$pvalues.2)
+    }
+  }
+  }
 }
-
-
